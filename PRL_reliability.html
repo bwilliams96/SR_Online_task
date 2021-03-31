@@ -232,6 +232,7 @@
     // for now this just terminates the experiment and displays an error message
     // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
     on_interaction_data_update: function(data) {
+      console.log(data)
       if(data.trial > 2 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
         jsPsych.endExperiment("Detected a change of screen focus.<br>"+JSON.stringify(data))
       }
