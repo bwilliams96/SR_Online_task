@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-2image-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-2image-keyboard-response.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body></body>
+  <script>
+
+      /* create timeline */
+    var timeline = [];
+
+    /* define welcome message trial */
+    var welcome = {
+      type: "html-keyboard-response",
+      stimulus: "Welcome to the experiment. Press any key to begin."
+    };
+    timeline.push(welcome);
+    
+    var stimuli = ['img/fractal1.jpg','img/fractal2.jpg']
+    var stimuli_shuffled = jsPsych.randomization.repeat(stimuli, 1)
+
+    /* test trials */
+    var stimuli_display = {
+      type: '2image-keyboard-response',
+      stimulusLeft: stimuli_shuffled[0],
+      stimulusRight: stimuli_shuffled[1],
+      choices: ['leftArrow', 'rightArrow']
+      timeline: [
+          
+      ]
+    };
+
+    timeline.push(stimuli_display);
+
+    var timeline_left = []
+
+    var stimuli_display2 = {
+      type: '2image-keyboard-response',
+      stimulusLeft: stimuli_shuffled[1],
+      stimulusRight: stimuli_shuffled[0],
+      choices: ['leftArrow', 'rightArrow']
+    };
+
+    timeline_left.push(stimuli_display2);
+
+
+    /* conditional left 
+
+    var if_node_left = {
+      conditional_function: function() {
+        var data = jsPsych.data.get.last(1).values()[0];
+        if(data.key_press == 37) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    var stimuli_left = {
+      type: '2image-keyboard-response',
+      stimulusLeft: stimuli_shuffled[0],
+      stimulusRight: stimuli_shuffled[0],
+      choices: ['leftArrow', 'rightArrow']
+    };
+
+    var timeline_left = [if_node_left, stimuli_left]
+
+    timeline.push(timeline_left) */
+
+    jsPsych.init({
+      timeline: timeline, timeline_left
+    });
+  </script>
+  </html>
