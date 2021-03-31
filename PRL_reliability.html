@@ -109,7 +109,7 @@
       if (jsPsych.data.get().last(1).values()[0].resp != null) {
       return "img/" + stimuli[trial_count].left
     } else {
-      return "img/blank.png"
+      return "img/blank.png" // when response is missed, a blank image is displayed with a prompt
       }
     },
     stimulusRight: function() {
@@ -229,12 +229,16 @@
   //***** Start the experiment *****//
   jsPsych.init({
     // !!! How can we use these browser interactions in the conditional task loop (line 208) to terminate if people click away?
+    // for now this just terminates the experiment and displays an error message
+    // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
     on_interaction_data_update: function(data) {
-      console.log(JSON.stringify(data))
+      if(data.trial > 2 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+        jsPsych.endExperiment("Detected a change of screen focus.<br>"+JSON.stringify(data))
+      }
     },
     timeline: timeline,
     on_finish: function() {
-      jsPsych.data.displayData();
+      //jsPsych.data.displayData(); // this is suppressed for now because it interferes with the end experiment error message
     }
   });
 </script>
