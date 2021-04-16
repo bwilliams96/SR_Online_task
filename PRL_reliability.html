@@ -15,6 +15,7 @@
 <script>
   //***** Setup task *****//
   // Set task parameters
+  var n_trials_prac = 10; //Number of practice trials
   var n_trials = 150; //Number of trials
   var prob_cor = 0.8; //Probability of win on 'correct' choice
   var prob_incor = 0.2; //Probability of win on 'incorrect' choice
@@ -69,6 +70,7 @@
             "<p>Please respond as quickly as possible, you will have limited time per trial.</p>" +
             "<p>Press any key to begin 10 practice trials.</p>",
         };
+  
   // Display stimuli
   var stimuli_display = {
     type: '2image-keyboard-response',
@@ -206,7 +208,32 @@
         }
     }
   };
-
+  
+  //***** Define practice loop *****//
+  
+  var prl_prac = [stimuli_display, response_display, outcome_display, cumulative_display] // May remove "cumulative_display" if not necessary //
+  var prac = {
+    timeline: prl_prac,
+    loop_function: function() {
+      if (trial_count < n_trials_prac) { // Removed attention check for practice trials //
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+  
+    //***** Define main task instructions *****//
+  
+    // Main task instructions
+  var main_instructions = {
+    type: "html-keyboard-response",
+    stimulus: "<p>You will now begin the main task.</p> " +
+            "<p>Please respond as quickly as possible, as failure to do so will result " +
+            "in your exclusion from further partcipation.</p> " +
+            "<p>Press any key to begin.</p>" +
+          };
+  
   //***** Define task loop *****//
 
   var prl = [stimuli_display, response_display, outcome_display, cumulative_display]
@@ -228,6 +255,8 @@
     fullscreen_mode: true
   });
   timeline.push(instructions);
+  timeline.push(prac)
+  timeline.push(main_instructions)
   timeline.push(main);
   timeline.push({
     type: 'fullscreen',
