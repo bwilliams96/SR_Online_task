@@ -58,9 +58,17 @@
   // Task instructions
   var instructions = {
     type: "html-keyboard-response",
-    stimulus: "<p> Insert instructions here </p>"
-  };
-
+    stimulus: "<p>In this experiment, you will see abstract images +
+            "appear on the screen.</p><p>You must " +
+            "choose only <strong>1</strong> of the 2 images displayed on the screen during each " +
+            "trial.</p><p>You will earn points based on your choices.</p><p>Your goal is to " +
+            "accumulate as many points as possible by the end of the trials.</p><p>If you " +
+            "choose the image on the <strong>left</strong> side of the screen, press the <strong>'Left Arrow'</strong> " +
+            "key on the keyboard.</p><p>If you choose the image on the <strong>right</strong> side of the " +
+            "screen, press the <strong>'Right Arrow'</strong> key on the keyboard.</p>" +
+            "<p>Please respond as quickly as possible, you will have limited time per trial.</p>" +
+            "<p>Press any key to begin.</p>",
+        };
   // Display stimuli
   var stimuli_display = {
     type: '2image-keyboard-response',
