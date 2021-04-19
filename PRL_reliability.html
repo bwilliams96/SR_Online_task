@@ -26,15 +26,10 @@ gorilla.ready(function(){
   var jsPsych = window['jsPsych'];
 
   // Set task images
-  var blank = gorilla.stimulusURL('SR_Online_task-development/img/blank.jpg');
-  var abImage1 = gorilla.stimulusURL('SR_Online_task-development/img/fractal1.jpg');
-  var abImage2 = gorilla.stimulusURL('SR_Online_task-development/img/fractal2.jpg');
-
-  // Creating images array
   var images = [];			     
-  images.push(blank);
-  images.push(abImage1);
-  images.push(abImage2);
+  images.push(gorilla.stimulusURL('blank.jpg'));
+  images.push(gorilla.stimulusURL('fractal1.jpg'));
+  images.push(gorilla.stimulusURL('fractal2.jpg'));
 	
   // Set task parameters
   var n_trials_prac = 10; //Number of practice trials
@@ -291,25 +286,25 @@ gorilla.ready(function(){
   });
 
   //***** Start the experiment *****//
-  	jsPsych.init({
+  jsPsych.init({
     // !!! How can we use these browser interactions in the conditional task loop (line 208) to terminate if people click away?
     // for now this just terminates the experiment and displays an error message
     // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
-    // Updated to be compatible with Gorilla, involves pre-loading images (while hiding progress bar)
-    		on_interaction_data_update: function(data) {
-      		console.log(data)
-      		if(data.trial > 2 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
-        	jsPsych.endExperiment("Detected a change of screen focus.<br>"+JSON.stringify(data))
-      	}
+    on_interaction_data_update: function(data) {
+      console.log(data)
+      if(data.trial > 2 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+        jsPsych.endExperiment("Detected a change of screen focus.<br>"+JSON.stringify(data))
+      }
     },
-    		timeline: timeline,
-		preload_images: images,
-		show_preload_progress_bar: false,
-		on_data_update: function(data){
-      			gorilla.metric(data);
-		},
-    		on_finish: function() {
-    //jsPsych.data.displayData(); // this is suppressed for now because it interferes with the end experiment error message
+    display_element: $('#gorilla')[0],
+    timeline: timeline,
+    preload_images: images,
+    show_preload_progress_bar: false,
+    on_data_update: function(data){
+      gorilla.metric(data);
+    },
+    on_finish: function() {
+      //jsPsych.data.displayData(); // this is suppressed for now because it interferes with the end experiment error message
     }
   });
 }
