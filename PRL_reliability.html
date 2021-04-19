@@ -175,7 +175,14 @@ gorilla.ready(function(){
     }
   };
 
-  // Display outcome
+  // Display outcome - Practice task
+  var outcome_display_prac = {
+    type: 'html-keyboard-response',
+    prompt: 'Points earned:',
+    stimulus: "#####"
+  }
+   
+  // Display outcome - Main task
   var outcome_display = {
     type: 'html-keyboard-response',
     prompt: 'Points change',
@@ -203,7 +210,14 @@ gorilla.ready(function(){
     }
   };
 
-  // Display total
+  // Display total - Practice task
+  var cumulative_display_prac = {
+    type: 'html-keyboard-response',
+    prompt: 'Cumulative total',
+    stimulus: "#####"
+  }
+	
+  // Display total - Main task
   var cumulative_display = {
     type: 'html-keyboard-response',
     prompt: 'Cumulative total',
@@ -240,7 +254,7 @@ gorilla.ready(function(){
   
   //***** Define practice loop *****//
   
-  var prl_prac = [stimuli_display, response_display, outcome_display, cumulative_display] // May remove "cumulative_display" if not necessary //
+  var prl_prac = [stimuli_display, response_display, outcome_display_prac, cumulative_display_prac] // May remove "cumulative_display" if not necessary //
   var prac = {
     timeline: prl_prac,
     loop_function: function() {
