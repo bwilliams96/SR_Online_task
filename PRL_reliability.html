@@ -73,7 +73,7 @@ gorilla.ready(function(){
 
   //***** Define on screen windows *****//
 
-  // Task instructions
+  // Task instructions - Before practice task
   var instructions = {
     type: "html-keyboard-response",
     stimulus: "<p>In this experiment, you will see abstract images " +
@@ -252,7 +252,7 @@ gorilla.ready(function(){
     }
   };
   
-  //***** Define practice loop *****//
+  //***** Define practice task loop *****//
   
   var prl_prac = [stimuli_display, response_display, outcome_display_prac, cumulative_display_prac] // May remove "cumulative_display" if not necessary //
   var prac = {
@@ -270,7 +270,7 @@ gorilla.ready(function(){
     }
   };
     
-  //***** Define task loop *****//
+  //***** Define main task loop *****//
 
   var prl = [stimuli_display, response_display, outcome_display, cumulative_display]
   var main = {
