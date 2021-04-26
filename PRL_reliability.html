@@ -73,7 +73,7 @@ gorilla.ready(function(){
 
   //***** Define on screen windows *****//
 
-  // Task instructions
+  // Task instructions - Before practice task
   var instructions = {
     type: "html-keyboard-response",
     stimulus: "<p>In this experiment, you will see abstract images " +
@@ -123,8 +123,10 @@ gorilla.ready(function(){
     on_finish: function(data) {
       if (data.key_press == 39) {
         data.resp = "right"
+	gorilla.resp = "right"
       } else if (data.key_press == 37) {
         data.resp = "left"
+	gorilla.resp = "left"
       } else {
         data.resp = null
         consec_miss++
@@ -137,7 +139,9 @@ gorilla.ready(function(){
         data.choice = null
       }
       data.cor = data.choice == "fractal" + cor_choice + ".jpg"
+      gorilla.cor = gorilla.choice == "fractal" + cor_choice + ".jpg"
       data.cor_im = "fractal" + cor_choice + ".jpg"
+      gorilla.cor_im = "fractal" + cor_choice + ".jpg"
     }
   };
 
@@ -175,7 +179,14 @@ gorilla.ready(function(){
     }
   };
 
-  // Display outcome
+  // Display outcome - Practice task
+  var outcome_display_prac = {
+    type: 'html-keyboard-response',
+    prompt: 'Points earned:',
+    stimulus: "#####"
+  }
+   
+  // Display outcome - Main task
   var outcome_display = {
     type: 'html-keyboard-response',
     prompt: 'Points change',
@@ -203,7 +214,14 @@ gorilla.ready(function(){
     }
   };
 
-  // Display total
+  // Display total - Practice task
+  var cumulative_display_prac = {
+    type: 'html-keyboard-response',
+    prompt: 'Cumulative total',
+    stimulus: "#####"
+  }
+	
+  // Display total - Main task
   var cumulative_display = {
     type: 'html-keyboard-response',
     prompt: 'Cumulative total',
@@ -238,9 +256,9 @@ gorilla.ready(function(){
     }
   };
   
-  //***** Define practice loop *****//
+  //***** Define practice task loop *****//
   
-  var prl_prac = [stimuli_display, response_display, outcome_display, cumulative_display] // May remove "cumulative_display" if not necessary //
+  var prl_prac = [stimuli_display, response_display, outcome_display_prac, cumulative_display_prac] // May remove "cumulative_display" if not necessary //
   var prac = {
     timeline: prl_prac,
     loop_function: function() {
@@ -256,7 +274,7 @@ gorilla.ready(function(){
     }
   };
     
-  //***** Define task loop *****//
+  //***** Define main task loop *****//
 
   var prl = [stimuli_display, response_display, outcome_display, cumulative_display]
   var main = {
