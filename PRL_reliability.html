@@ -1,6 +1,3 @@
-// Importing "gorilla/gorilla" to allow for hosting the experiment on Gorilla
-import gorilla = require("gorilla/gorilla");
-
 <!DOCTYPE html>
 <html>
 
@@ -16,20 +13,18 @@ import gorilla = require("gorilla/gorilla");
 
 <body></body>
 <script>
-
+// Importing "gorilla/gorilla" to allow for hosting the experiment on Gorilla
+import gorilla = require("gorilla/gorilla");
+var jsPsych = window['jsPsych'];
 // Loading the following code to Gorilla
 gorilla.ready(function(){
 	
   //***** Setup task *****//
-  
-  // Set experiment loading 
-  var jsPsych = window['jsPsych'];
-
   // Set task images
   var images = [];			     
-  images.push(gorilla.stimulusURL('blank.jpg'));
-  images.push(gorilla.stimulusURL('fractal1.jpg'));
-  images.push(gorilla.stimulusURL('fractal2.jpg'));
+  images.push(gorilla.stimuliURL('blank.png'));
+  images.push(gorilla.stimuliURL('fractal1.jpg'));
+  images.push(gorilla.stimuliURL('fractal2.jpg'));
 	
   // Set task parameters
   var n_trials_prac = 10; //Number of practice trials
@@ -104,10 +99,10 @@ gorilla.ready(function(){
   var stimuli_display = {
     type: '2image-keyboard-response',
     stimulusLeft: function() {
-      return "img/" + stimuli[trial_count].left
+      return gorilla.stimuliURL(`${stimuli[trial_count].left}`);
     },
     stimulusRight: function() {
-      return "img/" + stimuli[trial_count].right
+      return gorilla.stimuliURL(`${stimuli[trial_count].right}`);
     },
     choices: ['leftArrow', 'rightArrow'],
     trial_duration: stim_dur,
@@ -152,16 +147,16 @@ gorilla.ready(function(){
     type: '2image-keyboard-response',
     stimulusLeft: function() {
       if (jsPsych.data.get().last(1).values()[0].resp != null) {
-      return "img/" + stimuli[trial_count].left
+      return gorilla.stimuliURL(`${stimuli[trial_count].left}`);
     } else {
-      return "img/blank.png" // when response is missed, a blank image is displayed with a prompt
+      return gorilla.stimuliURL('blank.png'); // when response is missed, a blank image is displayed with a prompt
       }
     },
     stimulusRight: function() {
       if (jsPsych.data.get().last(1).values()[0].resp != null) {
-      return "img/" + stimuli[trial_count].right
+      return gorilla.stimuliURL(`${stimuli[trial_count].right}`);
       } else {
-        return "img/blank.png"
+        return gorilla.stimuliURL('blank.png');
       }
     },
     choices: [jsPsych.NO_KEYS],
@@ -184,8 +179,10 @@ gorilla.ready(function(){
   // Display outcome - Practice task
   var outcome_display_prac = {
     type: 'html-keyboard-response',
-    prompt: 'Points earned:',
-    stimulus: "#####"
+    prompt: 'Points change',
+    trial_duration: oc_dur,
+    stimulus: "#####",
+    choices: [jsPsych.NO_KEYS],
   }
    
   // Display outcome - Main task
@@ -220,7 +217,12 @@ gorilla.ready(function(){
   var cumulative_display_prac = {
     type: 'html-keyboard-response',
     prompt: 'Cumulative total',
-    stimulus: "#####"
+    trial_duration: cum_dur,
+    stimulus: "#####",
+    choices: [jsPsych.NO_KEYS],
+    on_finish: function(data) {
+      trial_count++
+    }
   }
 	
   // Display total - Main task
