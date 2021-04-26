@@ -123,10 +123,10 @@ gorilla.ready(function(){
     on_finish: function(data) {
       if (data.key_press == 39) {
         data.resp = "right"
-	gorilla.resp = "right"
+	      gorilla.resp = "right"
       } else if (data.key_press == 37) {
         data.resp = "left"
-	gorilla.resp = "left"
+      	gorilla.resp = "left"
       } else {
         data.resp = null
         consec_miss++
@@ -134,9 +134,11 @@ gorilla.ready(function(){
       }
       if (data.key_press != null) {
         data.choice = stimuli[trial_count][data.resp]
+        gorilla.choice = stimuli[trial_count][data.resp]
         consec_miss = 0
       } else {
         data.choice = null
+        gorilla.choice = null
       }
       data.cor = data.choice == "fractal" + cor_choice + ".jpg"
       gorilla.cor = gorilla.choice == "fractal" + cor_choice + ".jpg"
