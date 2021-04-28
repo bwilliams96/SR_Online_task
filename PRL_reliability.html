@@ -18,14 +18,14 @@ import gorilla = require("gorilla/gorilla");
 var jsPsych = window['jsPsych'];
 // Loading the following code to Gorilla
 gorilla.ready(function(){
-	
+
   //***** Setup task *****//
   // Set task images
-  var images = [];			     
+  var images = [];
   images.push(gorilla.stimuliURL('blank.png'));
   images.push(gorilla.stimuliURL('fractal1.jpg'));
   images.push(gorilla.stimuliURL('fractal2.jpg'));
-	
+
   // Set task parameters
   var n_trials_prac = 10; //Number of practice trials
   var n_trials = 150; //Number of trials
@@ -44,7 +44,7 @@ gorilla.ready(function(){
   var cor_oc = makeArray(prob_cor, n_trials, max_consec, win_value_cor, loss_value_cor) //'Correct' choice outcomes
   var incor_oc = makeArray(prob_incor, n_trials, max_consec, win_value_incor, loss_value_incor) //'Incorrect' choice outcomes
   var reversal_point = setReversal(rev_interval, rev_diff, rev_num);
-	
+
   // initilisation of variables
   var stimuli = [];
   for (var i = 0; i < n_trials; i++) {
@@ -84,7 +84,7 @@ gorilla.ready(function(){
         };
 
   //***** Define main task instructions *****//
-  
+
   // Main task instructions
   var main_instructions = {
     type: "html-keyboard-response",
@@ -94,7 +94,7 @@ gorilla.ready(function(){
             "<p>Press any key to begin.</p>",
   };
 
-  
+
   // Display stimuli
   var stimuli_display = {
     type: '2image-keyboard-response',
@@ -184,7 +184,7 @@ gorilla.ready(function(){
     stimulus: "#####",
     choices: [jsPsych.NO_KEYS],
   }
-   
+
   // Display outcome - Main task
   var outcome_display = {
     type: 'html-keyboard-response',
@@ -224,7 +224,7 @@ gorilla.ready(function(){
       trial_count++
     }
   }
-	
+
   // Display total - Main task
   var cumulative_display = {
     type: 'html-keyboard-response',
@@ -259,9 +259,9 @@ gorilla.ready(function(){
         }
     }
   };
-  
+
   //***** Define practice task loop *****//
-  
+
   var prl_prac = [stimuli_display, response_display, outcome_display_prac, cumulative_display_prac] // May remove "cumulative_display" if not necessary //
   var prac = {
     timeline: prl_prac,
@@ -277,7 +277,7 @@ gorilla.ready(function(){
       }
     }
   };
-    
+
   //***** Define main task loop *****//
 
   var prl = [stimuli_display, response_display, outcome_display, cumulative_display]
@@ -314,8 +314,8 @@ gorilla.ready(function(){
     // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
     on_interaction_data_update: function(data) {
       console.log(data)
-      if(data.trial > 2 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
-        jsPsych.endExperiment("Detected a change of screen focus.<br>"+JSON.stringify(data))
+      if(data.trial > 2 & data.trial < 600 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+        jsPsych.endExperiment("We have detected that you have moved away from the experiment window.<br>The experiment has been terminated and your submission will be rejected.")
       }
     },
     display_element: $('#gorilla')[0],
