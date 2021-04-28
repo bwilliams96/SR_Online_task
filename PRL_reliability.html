@@ -139,7 +139,8 @@ gorilla.ready(function(){
       gorilla.cor = gorilla.choice == "fractal" + cor_choice + ".jpg"
       data.cor_im = "fractal" + cor_choice + ".jpg"
       gorilla.cor_im = "fractal" + cor_choice + ".jpg"
-      // Additional data recorded - Reversal point
+	    data.curr_trial = trial_count
+	    gorilla.curr_trial = trial_count
       data.reversal_point = reversal_point.includes(trial_count) == true
       gorilla.reversal_point = reversal_point.includes(trial_count) == true
     }
@@ -276,6 +277,7 @@ gorilla.ready(function(){
 		cumulative = 0
 		total_miss = 0
 		consec_miss = 0
+		trial_count = 0
         return false
       }
     }
