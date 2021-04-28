@@ -325,7 +325,7 @@ gorilla.ready(function(){
     // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
     on_interaction_data_update: function(data) {
       console.log(data)
-      if(data.trial > 2 & data.trial < 600 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+      if(data.trial > 1 & data.trial < 643 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
         jsPsych.endExperiment("We have detected that you have moved away from the experiment window.<br>The experiment has been terminated and your submission will be rejected.")
       }
     },
