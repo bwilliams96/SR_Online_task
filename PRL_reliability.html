@@ -59,6 +59,7 @@ gorilla.ready(function(){
   var consec_miss = 0;
   var total_miss = 0;
   var cumulative = 0;
+  var practice = true;
 
   // timings
   var max_rt = 2000; //maximum wait time for a keypress (ms)
@@ -105,7 +106,7 @@ gorilla.ready(function(){
       return gorilla.stimuliURL(`${stimuli[trial_count].right}`);
     },
     choices: ['leftArrow', 'rightArrow'],
-    trial_duration: stim_dur,
+    trial_duration: max_rt,
     data: {
       trial_phase: "choice",
       stimulusLeft: function() {
@@ -143,6 +144,8 @@ gorilla.ready(function(){
 	    gorilla.curr_trial = trial_count
       data.reversal_point = reversal_point.includes(trial_count) == true
       gorilla.reversal_point = reversal_point.includes(trial_count) == true
+      data.practice = practice
+      gorilla.practice = practice
     }
   };
 
@@ -274,17 +277,14 @@ gorilla.ready(function(){
         return true
       } else {
 		// Reset all counters at end of practice trials
-		cumulative = 0
-		total_miss = 0
-		consec_miss = 0
-		trial_count = 0
+		    cumulative = 0
+		    total_miss = 0
+		    consec_miss = 0
+		    trial_count = 0
+        practice = false
         return false
       }
-    }
-    // Adding additional tags to the data
-    data: {
-      task: "practice"
-      }	   
+    }  
   };
 
   //***** Define main task loop *****//
@@ -299,8 +299,7 @@ gorilla.ready(function(){
         return false
       }
     // Adding additional tags to the data
-    data: {
-      task: "main"
+    
     }
   };
 
