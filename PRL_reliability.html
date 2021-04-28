@@ -139,8 +139,8 @@ gorilla.ready(function(){
       gorilla.cor = gorilla.choice == "fractal" + cor_choice + ".jpg"
       data.cor_im = "fractal" + cor_choice + ".jpg"
       gorilla.cor_im = "fractal" + cor_choice + ".jpg"
-	    data.curr_trial = trial_count
-	    gorilla.curr_trial = trial_count
+	  data.curr_trial = trial_count
+	  gorilla.curr_trial = trial_count
       data.reversal_point = reversal_point.includes(trial_count) == true
       gorilla.reversal_point = reversal_point.includes(trial_count) == true
     }
@@ -280,7 +280,7 @@ gorilla.ready(function(){
 		trial_count = 0
         return false
       }
-    }
+    },
     // Adding additional tags to the data
     data: {
       task: "practice"
@@ -297,7 +297,7 @@ gorilla.ready(function(){
         return true
       } else {
         return false
-      }
+      },
     // Adding additional tags to the data
     data: {
       task: "main"
