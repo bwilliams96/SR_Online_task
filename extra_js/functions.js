@@ -42,20 +42,42 @@
 
   };
 
-  function imageShuffle() {
-    var stimuliImages = ["fractal1.jpg", "fractal2.jpg"];
-    var order = ['', '']
-    var rand = Math.random();
-    if (rand <= 0.5) {
-      order = [0, 1];
-    } else {
-      order = [1, 0];
+  //ntrials must be divisible by maxConsec and maxConsec must be an even number
+  function makeImList(ntrials, maxConsec) {
+    // because the arrays sit back to back, the max in each mini block must contain 
+    // half the max consec allowed in the full array for each condition
+    var n = maxConsec/2;
+    
+    // each mini block contains n of order 1 and n of order 2, so 2*n trials total
+    // this means we need to loop through ntrials/n/2 times 
+    
+    var loop = ntrials/n/2;
+    var array = []
+    
+    for (let step = 0; step < loop; step++) {
+      var order1 = new Array(n).fill({left: "fractal1.jpg", right: "fractal2.jpg"});
+      var order2 = new Array(n).fill({left: "fractal2.jpg", right: "fractal1.jpg"});
+      var concatArray = order1.concat(order2);
+      shuffle(concatArray);
+      array = array.concat(concatArray);
     }
-    return {
-      left: stimuliImages[order[0]],
-      right: stimuliImages[order[1]]
-    };
-  };
+    return array
+  }
+
+//   function imageShuffle() {
+//     var stimuliImages = ["fractal1.jpg", "fractal2.jpg"];
+//     var order = ['', '']
+//     var rand = Math.random();
+//     if (rand <= 0.5) {
+//       order = [0, 1];
+//     } else {
+//       order = [1, 0];
+//     }
+//     return {
+//       left: stimuliImages[order[0]],
+//       right: stimuliImages[order[1]]
+//     };
+//   };
 
 
   function checkReversal(reversalProb) {
