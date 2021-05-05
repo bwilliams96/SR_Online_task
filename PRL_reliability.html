@@ -66,6 +66,7 @@ gorilla.ready(function(){
   var stim_dur = 1000; //time image is highlighted for (ms)
   var oc_dur = 1000; //time outcome is shown for (ms)
   var cum_dur = 1000; //time total is shown for (ms)
+  var fb_dur = 5000; // time final feedback is shown for (ms)
 
   //***** Define on screen windows *****//
 
@@ -92,7 +93,9 @@ gorilla.ready(function(){
     stimulus: "<p>You will now begin the main task.</p> " +
             "<p>Please note that you must answer quickly, with multiple missed trials " +
             "meaning you will not be able to participate further.</p> " +
-            "<p>Press any key to begin.</p>",
+	    "<p>In addition, there is a reward bonus available for participants " +
+            "based on their performance. As such, please pay close attention to the task.</p>" +
+	    "<p>Press any key to begin.</p>",
   };
 
 
@@ -267,6 +270,22 @@ gorilla.ready(function(){
     }
   };
 
+   //***** Define main task performance feedback *****//
+ 
+   var performance_display = {
+   type: 'html-keyboard-response',
+   prompt: 'You responded correctly on this percentage of trials - You have earned the performance bonus!',
+   stimulus: function() {
+     var feedback_num_array = [50, 60, 65, 70, 75, 80]
+     var feedback = jsPsych.randomization.sampleWithoutReplacement(feedback_num_array, 1)
+       }
+     }
+     return feedback
+   },
+  choices: [jsPsych.NO_KEYS],
+  trial_duration: fb_dur      
+};
+	
   //***** Define practice task loop *****//
 
   var prl_prac = [stimuli_display, response_display, outcome_display_prac, cumulative_display_prac] // May remove "cumulative_display" if not necessary //
@@ -311,6 +330,7 @@ gorilla.ready(function(){
   timeline.push(prac);
   timeline.push(main_instructions);
   timeline.push(main);
+  timeline.push(performance_display);
   timeline.push({
     type: 'fullscreen',
     fullscreen_mode: false
