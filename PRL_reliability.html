@@ -93,7 +93,7 @@ gorilla.ready(function(){
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> Instead of seeing points during practice trials you will see #####, which is being used as a placeholder.`,
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> You will be told when you have completed the practice trials and when you are starting the main part of the task.`,
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> Remember, <strong>you could receive a bonus payment based on the number of points you collect</strong> during the main part of the task.`,
-      'If you are ready to start the practice trials, please press <strong>Next</strong>. If you would like to review any instructions, please press <strong>Previous</strong>'
+      'If you are ready to start the practice trials, please press <strong>Next</strong>. If you would like to review any instructions, please press <strong>Previous</strong>.'
     ],
     show_clickable_nav: true,
     allow_keys: false
@@ -122,7 +122,7 @@ gorilla.ready(function(){
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> After making choices on practice trials you saw #####, however, in the main part of the task <strong>you will see points, and the total number of points you have gained or lost so far</strong>.`,
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> Additionally, choices made during practice trials will have <strong>no bearing on outcomes in the main task</strong>.`,
       `<img src="${gorilla.stimuliURL('both_fractals.jpg')}"></img> Remember, <strong>you could receive a bonus payment based on the number of points you collect</strong> during the main part of the task.`,
-      'If you are ready to start the main part of the task, please press <strong>Next</strong>. If you would like to review any instructions, please press <strong>Previous</strong>'
+      'If you are ready to start the main part of the task, please press <strong>Next</strong>. If you would like to review any instructions, please press <strong>Previous</strong>.'
     ],
     show_clickable_nav: true,
     allow_keys: false
@@ -383,6 +383,7 @@ gorilla.ready(function(){
       gorilla.metric(data);
     },
     on_finish: function() {
+      gorilla.finish();
       //jsPsych.data.displayData(); // this is suppressed for now because it interferes with the end experiment error message
     }
   });
