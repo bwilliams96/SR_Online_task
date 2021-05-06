@@ -139,7 +139,10 @@ gorilla.ready(function(){
       {prompt: "I understand that I need to try and respond on every trial, and that if I dont respond on five consecutive trials or nine trials in total that I will not receive any payment for my participation.", name: 'respond', options: comprehension_options, required: true},
       {prompt: "I understand that I need to keep the task window in fullscreen mode, and that if I exit fullscreen mode or tab away from this window that I will not receive any payment for my participation.", name: 'fullscreen', options: comprehension_options, required: true},
       {prompt: "I fully understand the instructions for this task.", name: 'confirm', options: comprehension_options, required: true},
-    ]
+    ],
+    on_finish(data) {
+      gorilla.responses = data.responses
+    }
   };
 
   var comprehension_instructions = {
