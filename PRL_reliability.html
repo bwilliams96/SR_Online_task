@@ -53,7 +53,7 @@ gorilla.ready(function(){
   var correctCount = 0;
   var incorrectCount = 0;
   var score = 0;
-  var event_trial_count = 0;
+  var event_trial_count = 1;
   var cor_choice = jsPsych.randomization.sampleWithoutReplacement([1, 2], 1); // select initial correct stimulus
   var trial_count = 0;
   var consec_miss = 0;
@@ -348,26 +348,28 @@ gorilla.ready(function(){
     },
     on_finish: function(data) {
       trial_count++
-      event_trial_count++
+      gorilla.store('PRL_trials', trial_count, true);
       if (reversal_point.includes(trial_count)) {
           cor_choice = (cor_choice * -1) + 3;
+          event_trial_count++
         }
     }
   };
 
-   //***** Define main task performance feedback *****//
- 
-  var performance_display = {
-    type: 'html-keyboard-response',
-    prompt: 'You responded correctly on this percentage of trials - You have earned the performance bonus!',
-    stimulus: function() {
-      var feedback_num_array = [50, 60, 65, 70, 75, 80]
-      var feedback = jsPsych.randomization.sampleWithoutReplacement(feedback_num_array, 1)
-      return feedback
-    },
-    choices: [jsPsych.NO_KEYS],
-    trial_duration: fb_dur      
-  };
+   //***** Generate random task performance *****//
+   var rand_performance = Math.floor(Math.random() * (80 - 50 + 1)) + 50
+   var performance_display = {
+     type: 'html-keyboard-response',
+     stimulus: `You responded correctly on ${rand_performance}% of trials - You have earned the performance bonus!`,
+      choices: [jsPsych.NO_KEYS],
+      trial_duration: fb_dur      
+    };
+
+   var performance_display_continue = {
+     type: 'html-keyboard-response',
+     prompt: 'Press any key to continue.',
+     stimulus: `You responded correctly on ${rand_performance}% of trials - You have earned the performance bonus!`,
+    };
 	
   //***** Define practice task loop *****//
 
@@ -416,6 +418,7 @@ gorilla.ready(function(){
   timeline.push(comprehension_conditional);
   timeline.push(main);
   timeline.push(performance_display);
+  timeline.push(performance_display_continue);
   timeline.push({
     type: 'fullscreen',
     fullscreen_mode: false
@@ -428,7 +431,7 @@ gorilla.ready(function(){
     // the 'blur' event is moving away from the browser window, i.e. clicking another window or tab
     on_interaction_data_update: function(data) {
       console.log(data)
-      if(data.trial > 1 & data.trial < 643 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+      if(data.trial > 1 & data.trial < 644 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
         jsPsych.endExperiment("We have detected that you have moved away from the experiment window.<br>The experiment has been terminated and your submission will be rejected.")
       }
     },
