@@ -60,6 +60,7 @@ gorilla.ready(function(){
   var total_miss = 0;
   var cumulative = 0;
   var practice = true;
+  gorilla.store('PRL_complete', true, true);
 
   // timings
   var max_rt = 2000; //maximum wait time for a keypress (ms)
@@ -348,7 +349,6 @@ gorilla.ready(function(){
     },
     on_finish: function(data) {
       trial_count++
-      gorilla.store('PRL_trials', trial_count, true);
       if (reversal_point.includes(trial_count)) {
           cor_choice = (cor_choice * -1) + 3;
           event_trial_count++
@@ -432,6 +432,7 @@ gorilla.ready(function(){
     on_interaction_data_update: function(data) {
       console.log(data)
       if(data.trial > 1 & data.trial < 644 & (data.event == "blur" | data.event == "fullscreenexit")){ // probably want to start this after the instruction - a bit harsh if we kick them out while they are reading the instructions if they change screens
+        gorilla.store('PRL_complete', false, true);
         jsPsych.endExperiment("We have detected that you have moved away from the experiment window.<br>The experiment has been terminated and your submission will be rejected.")
       }
     },
