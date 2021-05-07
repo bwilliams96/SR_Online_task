@@ -123,3 +123,7 @@
 #jspsych-data-display {
   text-align: left;
 }
+
+img {
+  max-width: 80%;
+}
